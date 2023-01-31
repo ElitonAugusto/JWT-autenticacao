@@ -1,4 +1,4 @@
-package com.jwt.gestaodeprojetos.service;
+package com.jwt.gestaodeprojetos.security;
 
 import java.util.Date;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JWTService {
 
-    // Chave secreta utilizada pe JWT codificar e descodificar o token
+    // Chave secreta utilizada pela JWT codificar e descodificar o token
     // Chave que sabe criptografar e descriptografar o token
     // OBS. Geralmente não deixamos isso dentro do codigo e sim pegamos 
     // de alguma configuraçao ou de algum lugar, pois isso tem que ser muito seguro
