@@ -1,9 +1,7 @@
 package com.jwt.gestaodeprojetos.security;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.InputMismatchException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     // Metodo principal onde toda a requisição vem antes de chegar no nosso
     // endpoint.
+
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -41,11 +42,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         // - usa-se o optional pois pode ser que venha nulo
         Optional<Long> id = jwtService.obterIdDoUsuario(token);
 
-        // Se não achou o id, é porque o token esta incorreto.  
-        if (!id.isPresent()) {
-            throw new InputMismatchException("Token inválido!");
-        }
-
+        // Se achou o id, é para executar.  
+        if (id.isPresent()) {
+        
         // Obtem o usuario dono do token pelo seu id.
         UserDetails usuario = customUserDetailsService.obterUsuarioPorId(id.get());
 
@@ -60,6 +59,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         // Repasso a autenticação para o contexto do security.
         // A partir de agora o spring vai tomar conta de tudo.
         SecurityContextHolder.getContext().setAuthentication(autenticacao);
+        }
+
+        // Metodo padrão para filtar as regras do usuario.
+        filterChain.doFilter(request, response);
     }
 
     private String obterToken(HttpServletRequest request) {

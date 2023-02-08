@@ -17,11 +17,11 @@ import jakarta.persistence.SequenceGenerator;
 public class Usuario implements UserDetails {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_usuario")
     private Long id;
 
     //Sig que nao pode ser nulo
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator_usuario")
     private String nome;
 
     //Sig que nao pode ser nulo e que tem que ser unico sem repetições
