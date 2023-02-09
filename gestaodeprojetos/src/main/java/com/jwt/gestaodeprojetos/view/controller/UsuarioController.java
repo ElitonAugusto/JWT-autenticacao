@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jwt.gestaodeprojetos.model.MensagemEmail;
 import com.jwt.gestaodeprojetos.model.Usuario;
+import com.jwt.gestaodeprojetos.service.EmailService;
 import com.jwt.gestaodeprojetos.service.UsuarioService;
 import com.jwt.gestaodeprojetos.view.usuario.LoginRequest;
 import com.jwt.gestaodeprojetos.view.usuario.LoginResponse;
@@ -25,6 +27,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService servicoUsuario;
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping
     public List<Usuario> obterTodos(){
         return servicoUsuario.obterTodos();
@@ -36,12 +41,24 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario adicinar (@RequestBody Usuario usuario){
+    public Usuario adicinar (@RequestBody Usuario usuario) throws Exception{
         return servicoUsuario.adicionar(usuario);
     }
 
     @PostMapping("/login")
     public LoginResponse login (@RequestBody LoginRequest request){
         return servicoUsuario.logar(request.getEmail(), request.getSenha());
+    }
+
+    @PostMapping("/email")
+    public String enviarEmail(@RequestBody MensagemEmail email){
+        try{
+            emailService.enviar(email);
+            return "Deu certo";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "Deu ruim";
+
+        }
     }
 }    

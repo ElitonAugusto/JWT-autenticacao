@@ -72,16 +72,19 @@ public class WebSecurityConfig {
                  * Daqui pra baixo é onde nos vamos futucar e fazer nossas validações.
                  * Aqui vamos informar as rotas que não vão precisar de autenticação.
                  */
-                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/usuarios/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/usuarios", "/api/usuarios/email", "/api/usuarios/login")
+                .permitAll()
                 .requestMatchers(HttpMethod.GET).permitAll()
                 .anyRequest()
                 .authenticated();// Digo que as demais requisições devem ser autenticadas.
 
         // Aqui eu informo que antes de qualter requisição http, o sistema deve usar o
         // nosso filtro jwtAuthenticationFilter.
+       
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
 }
+
+

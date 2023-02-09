@@ -31,8 +31,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     // Metodo principal onde toda a requisição vem antes de chegar no nosso
     // endpoint.
 
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
