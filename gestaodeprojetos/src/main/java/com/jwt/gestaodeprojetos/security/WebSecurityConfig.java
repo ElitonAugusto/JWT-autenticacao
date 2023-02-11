@@ -74,7 +74,6 @@ public class WebSecurityConfig {
                  */
                 .requestMatchers(HttpMethod.POST, "/api/usuarios", "/api/usuarios/email", "/api/usuarios/login")
                 .permitAll()
-                .requestMatchers(HttpMethod.GET).permitAll()
                 .anyRequest()
                 .authenticated();// Digo que as demais requisições devem ser autenticadas.
 
